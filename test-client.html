@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Test</title>
+</head>
+<body>
+  <h2>Basic Test</h2>
+  <button id="testBtn">Click Me</button>
+  <div id="log"></div>
+
+  <script>
+    const testBtn = document.getElementById("testBtn");
+    const logDiv = document.getElementById("log");
+
+    function log(message) {
+      logDiv.innerHTML += `<div>${message}</div>`;
+      console.log(message);
+    }
+
+    log("Script loaded!");
+
+    testBtn.onclick = () => {
+      log("Button clicked!");
+      
+      // Test WebSocket connection
+      const ws = new WebSocket("ws://localhost:8080/ws");
+      
+      ws.onopen = () => {
+        log("WebSocket connected!");
+      };
+      
+      ws.onerror = (error) => {
+        log("WebSocket error!");
+        console.error(error);
+      };
+      
+      ws.onclose = (event) => {
+        log(`WebSocket closed: ${event.code}`);
+      };
+    };
+  </script>
+</body>
+</html>
